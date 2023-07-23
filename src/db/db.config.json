@@ -1,0 +1,16 @@
+{
+  "dbname": "addo",
+  "version": 2,
+  "stores": [
+    {
+      "name": "projects",
+      "options": {
+        "keyPath": "id",
+        "autoIncrement": true
+      },
+      "indexes": [
+        ["name", "name", {"unique": true}]
+      ]
+    }
+  ]
+}

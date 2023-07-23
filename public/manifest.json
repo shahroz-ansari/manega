@@ -1,11 +1,11 @@
 {
     "theme_color": "#356cf6",
-    "background_color": "#f3f118",
+    "background_color": "#f8f656",
     "display": "fullscreen",
     "scope": "/",
     "start_url": "/",
-    "name": "Manega",
-    "short_name": "Manega",
+    "name": "Addo",
+    "short_name": "Addo",
     "icons": [
         {
             "src": "/icon-192x192.png",

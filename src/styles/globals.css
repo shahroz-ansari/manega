@@ -4,7 +4,8 @@
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-
+  
+  --primary: #356cf6;
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -87,12 +88,6 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
 
 a {
@@ -100,8 +95,86 @@ a {
   text-decoration: none;
 }
 
+header {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
+}
+
+.main {
+  height: 100vh;
+  display: flex;
+  position: relative;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 52px;
+  padding: 0 1rem;
+  background-color: #356cf6;
+}
+
+.appTitle {
+  font-weight: bold;
+  color: #fff;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  height: 64px;
+  align-items: center;
+  background: linear-gradient( to bottom, rgb(230 230 230 / 30%) 0%, rgb(var(--background-end-rgb)) 40% );
+}
+
+.section {
+  margin: 52px 0 64px;
+  flex-grow: 1;
+  padding: 1rem;
+}
+
+.icon {
+  filter: drop-shadow(1px 1px 1px rgb(0 0 0 / 0.8));
+}
+
+.pageTitle {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.addItemIcon {
+  position: fixed; 
+  bottom: 5rem;
+  right: 2rem;
+}
+
+.formFieldWrapper label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  gap: .5rem;
+}
+
+.footerIconWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
 }
