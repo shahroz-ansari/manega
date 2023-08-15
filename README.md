@@ -32,9 +32,3 @@ Reports
    SOW
         
     
-
--- 
-Thanks & Regards,Mohd Shahroz Ansari
-Software EngineerDew Solutions Pvt. Ltd. 
-P 301, 3rd floor, JMD Megapolis, Sector-48, Gurgaon -122018www.dewsolutions.in
-https://www.linkedin.com/company/dew-solutions-pvt-ltd
