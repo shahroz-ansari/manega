@@ -1,6 +1,6 @@
 {
   "dbname": "addo",
-  "version": 2,
+  "version": 3,
   "stores": [
     {
       "name": "projects",
@@ -8,8 +8,34 @@
         "keyPath": "id",
         "autoIncrement": true
       },
+      "indexes": [{ "name": "name", "keyPath": "name", "unique": true }]
+    },
+    {
+      "name": "msa",
+      "options": {
+        "keyPath": "id",
+        "autoIncrement": true
+      },
       "indexes": [
-        ["name", "name", {"unique": true}]
+        {
+          "name": "projectId",
+          "keyPath": "projectId",
+          "unique": false
+        }
+      ]
+    },
+    {
+      "name": "sow",
+      "options": {
+        "keyPath": "id",
+        "autoIncrement": true
+      },
+      "indexes": [
+        {
+          "name": "projectId",
+          "keyPath": "projectId",
+          "unique": false
+        }
       ]
     }
   ]

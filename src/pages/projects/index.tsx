@@ -1,41 +1,85 @@
-import Layout from '@/components/layout';
-import { getProjectList } from '@/db/store-services/projects';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ReactElement, useEffect, useState } from 'react';
+import { ListItemButton } from '@mui/material'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
-export default function ProjectList() {
-  const [projects, setProjects] = useState([])
+import PageHeader from '@/components/ui-kit/page-header'
+import {
+  PathProjectDashboard,
+  PathProjectEdit,
+  PathProjectsCreate,
+} from '@/constants'
+import useServiceDispatcher from '@/hooks/service-dispatcher.hook'
+import { MuiIconButton, MuiList, MuiListItemText } from '@/mui/components'
+import { BorderColorIcon } from '@/mui/icons'
+import { getProjectById, getProjectList } from '@/services'
+import type { RootState } from '@/store'
+import { useAppSelector } from '@/store/hooks'
+import {
+  updateActiveProject,
+  updateProjectsList,
+} from '@/store/reducers/projects'
+import generateLink from '@/utils/generateLink'
 
-  useEffect(()=>{
-    (async function(){
-      const list = await getProjectList()
-      console.log(list)
-      setProjects(list)
-    })()
-  }, [])
+const PageProjects = () => {
+  const { call: serviceGetProjects } = useServiceDispatcher(
+    getProjectList,
+    updateProjectsList
+  )
+
+  const { call: serviceGetProjectById } = useServiceDispatcher(
+    getProjectById,
+    updateActiveProject
+  )
+
+  const projects = useAppSelector((state: RootState) => state.projects.list)
+
+  const { push } = useRouter()
+
+  useEffect(() => {
+    serviceGetProjects()
+  }, [serviceGetProjects])
+
+  const handleProjectSelection = (id: number) => {
+    serviceGetProjectById(
+      {
+        onSuccess() {
+          push(generateLink(PathProjectDashboard, { projectId: id }))
+        },
+      },
+      id
+    )
+  }
 
   return (
     <>
-      <header>
-        Projects
-        <div>
-        <Link href="/projects/add">
-          <button>Add New</button>
-        </Link>
-        </div>  
-      </header>
-      <div>
-        {
-          projects.map((l:any) => <Link href={`/projects/${l.id}`} key={l.id}>
-            <div>{l.name}</div>
-          </Link>)
-        }
-      </div>
+      <PageHeader
+        title={'Projects'}
+        link={generateLink(PathProjectsCreate)}
+        linkText={'Create'}
+      />
+
+      <MuiList sx={{ width: '100%' }}>
+        {projects.map((value) => (
+          <ListItemButton
+            key={value.id}
+            disableGutters
+            onClick={() => handleProjectSelection(value.id)}
+          >
+            <MuiListItemText primary={value.name} />
+            <MuiIconButton
+              aria-label="comment"
+              onClick={(e) => {
+                e.stopPropagation()
+                push(generateLink(PathProjectEdit, { projectId: value.id }))
+              }}
+            >
+              <BorderColorIcon color="primary" />
+            </MuiIconButton>
+          </ListItemButton>
+        ))}
+      </MuiList>
     </>
   )
 }
 
-ProjectList.getLayout = function getLayout(page: ReactElement) {
-  return <Layout showFooter={false}>{page}</Layout>
-}
+export default PageProjects

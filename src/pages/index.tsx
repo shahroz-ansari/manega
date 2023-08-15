@@ -1,16 +1,23 @@
-import type { ReactElement } from 'react'
+import useAppNavigation from '@/hooks/app-navigation.hook'
+import { MuiButton, MuiStack } from '@/mui/components'
 
-import Layout from '@/components/layout'
-import styles from '@/styles/App.module.css'
-
-export default function Home() {
+const Index = () => {
+  const { navigate } = useAppNavigation()
   return (
     <>
-      Dashboard
+      Welcome!!
+      <MuiStack>
+        <MuiStack direction="row">
+          <MuiButton variant="contained" onClick={() => null}>
+            Toggle authentication
+          </MuiButton>
+          <MuiButton variant="contained" onClick={navigate('/')}>
+            Goto dashboard
+          </MuiButton>
+        </MuiStack>
+      </MuiStack>
     </>
   )
 }
 
-Home.getLayout = function getLayout(page: ReactElement) {
-  return <Layout showFooter={false}>{page}</Layout>
-}
+export default Index

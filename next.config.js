@@ -5,6 +5,9 @@ const withPWA = require("next-pwa")({
 });
  
 const nextConfig = withPWA({
+  eslint: {
+    dirs: ['.'],
+  },
   reactStrictMode: true,
 });
  
