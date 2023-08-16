@@ -1,14 +1,19 @@
 import { ListItemButton } from '@mui/material'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 import PageHeader from '@/components/ui-kit/page-header'
-import { PathProjectSOWCreate, PathProjectSOWEdit } from '@/constants'
+import { PathProjectSOWCreate, PathProjectSOWEdit, Pending } from '@/constants'
 import type { IdbStoreSOWType } from '@/db/types'
 import useProject from '@/hooks/project.hook'
 import useServiceDispatcher from '@/hooks/service-dispatcher.hook'
-import { MuiIconButton, MuiList, MuiListItemText } from '@/mui/components'
-import { BorderColorIcon } from '@/mui/icons'
+import {
+  MuiIconButton,
+  MuiList,
+  MuiListItemText,
+  MuiStack,
+} from '@/mui/components'
+import { BorderColorIcon, CheckCircleIcon, WarningIcon } from '@/mui/icons'
 import { getSOWsByProjectId } from '@/services'
 import type { RootState } from '@/store'
 import { useAppSelector } from '@/store/hooks'
@@ -20,42 +25,55 @@ const PageSOW = () => {
     getSOWsByProjectId,
     updateSOWList
   )
+  const { push } = useRouter()
 
   const sows = useAppSelector((state: RootState) => state.sow.list)
 
-  const { projectId } = useProject()
+  const { project } = useProject()
 
   useEffect(() => {
-    if (projectId) serviceGetProjectSOW({}, projectId)
-  }, [serviceGetProjectSOW, projectId])
+    if (project?.id) serviceGetProjectSOW({}, project?.id)
+  }, [serviceGetProjectSOW, project?.id])
 
-  if (!projectId) return null
+  if (!project) return null
 
   return (
     <>
       <PageHeader
         title={'SOW list'}
-        link={generateLink(PathProjectSOWCreate, { projectId })}
+        link={generateLink(PathProjectSOWCreate)}
         linkText={'Create'}
       />
 
       <MuiList sx={{ width: '100%' }}>
         {sows.map((value: IdbStoreSOWType) => (
-          <Link href="/" key={value.id} legacyBehavior>
-            <ListItemButton disableGutters>
+          <ListItemButton
+            disableGutters
+            key={value.id}
+            sx={{ display: 'flex', justifyContent: 'space-between' }}
+          >
+            <MuiStack
+              gap={3}
+              direction="row"
+              display="flex"
+              alignItems="center"
+            >
               <MuiListItemText primary={`${value.from} - ${value.to}`} />
-              <Link
-                href={generateLink(PathProjectSOWEdit, {
-                  projectId,
-                  msaId: value.id,
-                })}
-              >
-                <MuiIconButton aria-label="comment">
-                  <BorderColorIcon color="primary" />
-                </MuiIconButton>
-              </Link>
-            </ListItemButton>
-          </Link>
+              {value.status === Pending ? (
+                <WarningIcon color="warning" />
+              ) : (
+                <CheckCircleIcon color="success" />
+              )}
+            </MuiStack>
+            <MuiIconButton
+              aria-label="comment"
+              onClick={() =>
+                push(generateLink(PathProjectSOWEdit, { sowId: value.id }))
+              }
+            >
+              <BorderColorIcon color="primary" />
+            </MuiIconButton>
+          </ListItemButton>
         ))}
       </MuiList>
     </>

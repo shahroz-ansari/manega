@@ -17,36 +17,38 @@ const PageAddSOW = () => {
 
   const [msas, setMSAs] = useState<IdbStoreMSAType[]>([])
 
-  const { projectId } = useProject()
+  const { project } = useProject()
 
   useEffect(() => {
-    if (projectId)
+    if (project?.id)
       serviceGetMSA(
         {
           onSuccess(list: IdbStoreMSAType[]) {
             setMSAs(list)
           },
         },
-        projectId
+        project?.id
       )
-  }, [projectId, serviceGetMSA])
+  }, [project?.id, serviceGetMSA])
 
   const handleSubmit = (data: IdbStoreNewProjectType) => {
     serviceAddSOW(
       {
         onSuccess() {
-          router.push(generateLink(PathProjectSOW, { projectId }))
+          router.push(generateLink(PathProjectSOW))
         },
       },
       data
     )
   }
 
+  if (!project) return null
+
   return (
     <>
       <PageHeader
         title={'Add SOW'}
-        link={generateLink(PathProjectSOW, { projectId })}
+        link={generateLink(PathProjectSOW)}
         linkText="Go back"
         linkVariant="text"
       />
@@ -54,7 +56,7 @@ const PageAddSOW = () => {
       <SOWForm
         mode="add"
         onFormSubmit={handleSubmit}
-        projectId={projectId}
+        projectId={project.id}
         msas={msas}
       />
     </>

@@ -59,6 +59,11 @@ const Sidebar = () => {
         icon: DashboardIcon,
         path: '/msa',
       },
+      {
+        title: 'SOW',
+        icon: DashboardIcon,
+        path: '/sow',
+      },
     ],
     []
   )

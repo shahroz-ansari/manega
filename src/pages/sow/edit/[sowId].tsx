@@ -23,20 +23,20 @@ const PageAddProjects = () => {
   const [sow, setSOW] = useState<IdbStoreSOWType | undefined>(undefined)
   const [msas, setMSAs] = useState<IdbStoreMSAType[]>([])
 
-  const { projectId } = useProject()
+  const { project } = useProject()
   const sowId = usePathParam('sowId', true) as number
 
   useEffect(() => {
-    if (projectId)
+    if (project?.id)
       serviceGetMSA(
         {
           onSuccess(list: IdbStoreMSAType[]) {
             setMSAs(list)
           },
         },
-        projectId
+        project?.id
       )
-  }, [projectId, serviceGetMSA])
+  }, [project?.id, serviceGetMSA])
 
   useEffect(() => {
     if (sowId) {
@@ -55,17 +55,19 @@ const PageAddProjects = () => {
     serviceUpdateSOW(
       {
         onSuccess() {
-          router.push(generateLink(PathProjectSOW, { projectId }))
+          router.push(generateLink(PathProjectSOW))
         },
       },
       { ...data, id: sow?.id }
     )
   }
+
+  if (!project) return null
   return (
     <>
       <PageHeader
         title={'Edit SOW'}
-        link={generateLink(PathProjectSOW, { projectId })}
+        link={generateLink(PathProjectSOW)}
         linkText="Go back"
         linkVariant="text"
       />
@@ -73,7 +75,7 @@ const PageAddProjects = () => {
       <SOWForm
         mode="edit"
         onFormSubmit={handleSubmit}
-        projectId={projectId}
+        projectId={project.id}
         sow={sow}
         msas={msas}
       />

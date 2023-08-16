@@ -3,4 +3,4 @@ export const appMeta = {
   title: 'Quiz App',
   description: 'A quiz app...',
   locale: 'en',
-};
+}
