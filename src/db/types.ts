@@ -49,3 +49,30 @@ export interface IdbStoreNewSOWType {
 export interface IdbStoreSOWType extends IdbStoreNewSOWType {
   id: number
 }
+
+export interface IdbStoreNewTimesheetType {
+  projectId: number
+  msaId: number
+  year: string
+  month: string
+  status: string
+  type: string
+  created: string
+}
+
+export interface IdbStoreTimesheetType extends IdbStoreNewTimesheetType {
+  id: number
+}
+
+export interface IdbStoreNewInvoiceType {
+  projectId: number
+  msaId: number
+  year: string
+  month: string
+  status: string
+  created: string
+}
+
+export interface IdbStoreInvoiceType extends IdbStoreNewInvoiceType {
+  id: number
+}

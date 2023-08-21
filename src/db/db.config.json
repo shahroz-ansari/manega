@@ -1,6 +1,6 @@
 {
   "dbname": "addo",
-  "version": 3,
+  "version": 4,
   "stores": [
     {
       "name": "projects",
@@ -21,6 +21,11 @@
           "name": "projectId",
           "keyPath": "projectId",
           "unique": false
+        },
+        {
+          "name": "msaId",
+          "keyPath": "msaId",
+          "unique": false
         }
       ]
     },
@@ -34,6 +39,49 @@
         {
           "name": "projectId",
           "keyPath": "projectId",
+          "unique": false
+        },
+        {
+          "name": "msaId",
+          "keyPath": "msaId",
+          "unique": false
+        }
+      ]
+    },
+    {
+      "name": "timesheet",
+      "options": {
+        "keyPath": "id",
+        "autoIncrement": true
+      },
+      "indexes": [
+        {
+          "name": "projectId",
+          "keyPath": "projectId",
+          "unique": false
+        },
+        {
+          "name": "msaId",
+          "keyPath": "msaId",
+          "unique": false
+        }
+      ]
+    },
+    {
+      "name": "invoice",
+      "options": {
+        "keyPath": "id",
+        "autoIncrement": true
+      },
+      "indexes": [
+        {
+          "name": "projectId",
+          "keyPath": "projectId",
+          "unique": false
+        },
+        {
+          "name": "msaId",
+          "keyPath": "msaId",
           "unique": false
         }
       ]

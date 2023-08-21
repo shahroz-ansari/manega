@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { Months, Status } from '@/constants'
+import { Months, Status, Years } from '@/constants'
 import type {
   IdbStoreMSAType,
-  IdbStoreNewSOWType,
-  IdbStoreSOWType,
+  IdbStoreNewTimesheetType,
+  IdbStoreTimesheetType,
 } from '@/db/types'
 import {
   MuiButton,
@@ -16,17 +16,17 @@ import {
 
 type Mode = 'add' | 'edit'
 
-const SOWForm = ({
+const TimesheetForm = ({
   mode,
   onFormSubmit,
   projectId,
   msas,
-  sow,
+  timesheet,
 }: {
   mode: Mode
   onFormSubmit: Function
   projectId: number
-  sow?: IdbStoreSOWType
+  timesheet?: IdbStoreTimesheetType
   msas: IdbStoreMSAType[]
 }) => {
   const {
@@ -38,9 +38,10 @@ const SOWForm = ({
   } = useForm({
     mode: 'onTouched',
     defaultValues: {
-      from: '',
-      to: '',
+      year: '',
+      month: '',
       status: '',
+      type: '',
       created: new Date().toString(),
       projectId,
       msaId: 0,
@@ -48,8 +49,8 @@ const SOWForm = ({
   })
 
   useEffect(() => {
-    if (sow) reset(sow)
-  }, [sow, reset])
+    if (timesheet) reset(timesheet)
+  }, [timesheet, reset])
 
   useEffect(() => {
     if (msas?.length)
@@ -64,7 +65,7 @@ const SOWForm = ({
     setValue('projectId', projectId)
   }, [projectId, setValue])
 
-  const onSubmit = (data: IdbStoreNewSOWType) => {
+  const onSubmit = (data: IdbStoreNewTimesheetType) => {
     onFormSubmit(data)
   }
 
@@ -100,35 +101,35 @@ const SOWForm = ({
         <Controller
           control={control}
           rules={{
-            required: 'From month name is required field',
+            required: 'Year is required field',
           }}
           render={({ field }) => (
             <MuiTextField
-              error={Boolean(errors.from)}
-              label="From month"
-              helperText={errors.from?.message || ''}
+              error={Boolean(errors.year)}
+              label="Year"
+              helperText={errors.year?.message || ''}
               select
               {...field}
             >
-              {Months.map((option) => (
+              {Years.map((option) => (
                 <MuiMenuItem key={option} value={option}>
                   {option}
                 </MuiMenuItem>
               ))}
             </MuiTextField>
           )}
-          name="from"
+          name="year"
         />
         <Controller
           control={control}
           rules={{
-            required: 'To month is required field',
+            required: 'Month is required field',
           }}
           render={({ field }) => (
             <MuiTextField
-              error={Boolean(errors.to)}
-              label="To month"
-              helperText={errors.to?.message || ''}
+              error={Boolean(errors.month)}
+              label="Month"
+              helperText={errors.month?.message || ''}
               select
               {...field}
             >
@@ -139,7 +140,7 @@ const SOWForm = ({
               ))}
             </MuiTextField>
           )}
-          name="to"
+          name="month"
         />
         <Controller
           control={control}
@@ -163,6 +164,28 @@ const SOWForm = ({
           )}
           name="status"
         />
+        <Controller
+          control={control}
+          rules={{
+            required: 'Type is required field',
+          }}
+          render={({ field }) => (
+            <MuiTextField
+              error={Boolean(errors.type)}
+              label="Type"
+              helperText={errors.type?.message || ''}
+              select
+              {...field}
+            >
+              {['Client', 'Self'].map((option) => (
+                <MuiMenuItem key={option} value={option}>
+                  {option}
+                </MuiMenuItem>
+              ))}
+            </MuiTextField>
+          )}
+          name="type"
+        />
 
         <MuiButton
           variant="contained"
@@ -176,4 +199,4 @@ const SOWForm = ({
   )
 }
 
-export default SOWForm
+export default TimesheetForm

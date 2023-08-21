@@ -1,9 +1,11 @@
 import idb from '@/db'
 import { storeNames } from '@/db/constants'
 import type {
+  IdbStoreNewInvoiceType,
   IdbStoreNewMSAType,
   IdbStoreNewProjectType,
   IdbStoreNewSOWType,
+  IdbStoreNewTimesheetType,
 } from '@/db/types'
 
 export const getProjectList = async () => {
@@ -60,4 +62,44 @@ export const updateSOW = async (data: IdbStoreNewSOWType) => {
 
 export const getSOWsByProjectId = async (projectId: number) => {
   return idb.getAll(storeNames.sow, projectId, 'projectId')
+}
+
+export const getTimesheetList = async () => {
+  return idb.getAll(storeNames.timesheet)
+}
+
+export const addNewTimesheet = async (data: IdbStoreNewTimesheetType) => {
+  return idb.add(storeNames.timesheet, data)
+}
+
+export const getTimesheetById = async (key: number) => {
+  return idb.get(storeNames.timesheet, key)
+}
+
+export const updateTimesheet = async (data: IdbStoreNewTimesheetType) => {
+  return idb.update(storeNames.timesheet, data)
+}
+
+export const getTimesheetsByProjectId = async (projectId: number) => {
+  return idb.getAll(storeNames.timesheet, projectId, 'projectId')
+}
+
+export const getInvoiceList = async () => {
+  return idb.getAll(storeNames.invoice)
+}
+
+export const addNewInvoice = async (data: IdbStoreNewInvoiceType) => {
+  return idb.add(storeNames.invoice, data)
+}
+
+export const getInvoiceById = async (key: number) => {
+  return idb.get(storeNames.invoice, key)
+}
+
+export const updateInvoice = async (data: IdbStoreNewInvoiceType) => {
+  return idb.update(storeNames.invoice, data)
+}
+
+export const getInvoicesByProjectId = async (projectId: number) => {
+  return idb.getAll(storeNames.invoice, projectId, 'projectId')
 }

@@ -55,3 +55,11 @@ export const PathProjectMSAEdit = '/msa/edit/:msaId'
 export const PathProjectSOW = '/sow'
 export const PathProjectSOWCreate = '/sow/create'
 export const PathProjectSOWEdit = '/sow/edit/:sowId'
+
+export const PathProjectTimesheet = '/timesheet'
+export const PathProjectTimesheetCreate = '/timesheet/create'
+export const PathProjectTimesheetEdit = '/timesheet/edit/:timesheetId'
+
+export const PathProjectInvoice = '/invoice'
+export const PathProjectInvoiceCreate = '/invoice/create'
+export const PathProjectInvoiceEdit = '/invoice/edit/:invoiceId'

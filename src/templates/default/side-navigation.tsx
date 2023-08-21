@@ -64,6 +64,16 @@ const Sidebar = () => {
         icon: DashboardIcon,
         path: '/sow',
       },
+      {
+        title: 'Timesheet',
+        icon: DashboardIcon,
+        path: '/timesheet',
+      },
+      {
+        title: 'Invoice',
+        icon: DashboardIcon,
+        path: '/invoice',
+      },
     ],
     []
   )
@@ -89,7 +99,10 @@ const Sidebar = () => {
         {[...publicMenu, ...(project ? projectMenu : [])].map(
           (item: SidebarItemProps, listIndex: number) => (
             <Link href={item.path} legacyBehavior key={listIndex}>
-              <MuiListItem disablePadding>
+              <MuiListItem
+                disablePadding
+                onClick={() => dispatch(setDrawerVisibility(!drawerVisibility))}
+              >
                 <MuiListItemButton selected={item.path.startsWith(pathname)}>
                   <MuiListItemIcon>
                     <item.icon />
